@@ -1,5 +1,6 @@
 import type { Subject, Chapter, Question, Paper } from "./types";
 import { C6_MATH_CHAPTERS, C6_MATH_QUESTIONS } from "./seed-class6-maths";
+import { C6_SCIENCE_CHAPTERS, C6_SCIENCE_QUESTIONS } from "./seed-class6-science";
 
 // ---------------------------------------------------------------------------
 // SEED CONTENT
@@ -69,7 +70,37 @@ export const CHAPTERS: Chapter[] = [
     subjectId: "physics",
     title: "Motion and Measurement",
     blurb: "Standard units, measuring length, and types of motion.",
-    ncertRef: "NCERT Class 6 Science, Ch. Motion and Measurement of Distances",
+    ncertRef: "NCERT Class 6 Science — Measurement of Length and Motion",
+    lesson: [
+      { kind: "heading", text: "Why we need standard units" },
+      {
+        kind: "para",
+        text: "Long ago people measured length using body parts — a handspan, a foot, a cubit. But these differ from person to person, so the same object gave different measurements. To be fair and consistent everywhere, the world agreed on standard units (the SI system).",
+      },
+      {
+        kind: "list",
+        items: [
+          "The SI unit of length is the metre (m).",
+          "Smaller: 1 m = 100 centimetres (cm) = 1000 millimetres (mm).",
+          "Larger: 1 kilometre (km) = 1000 m.",
+        ],
+      },
+      { kind: "tip", text: "When measuring with a ruler, place the object along the marks and read with your eye straight above the point — not at an angle." },
+      { kind: "heading", text: "Types of motion" },
+      {
+        kind: "list",
+        items: [
+          "Rectilinear: along a straight line (a car on a straight road).",
+          "Circular: along a circular path (a stone tied to a string, hands of a clock).",
+          "Periodic: repeating after equal intervals (a swing, a pendulum).",
+        ],
+      },
+      {
+        kind: "example",
+        problem: "What kind of motion does a child on a swing have?",
+        solution: "It moves to-and-fro, repeating after equal times, so it is periodic (oscillatory) motion.",
+      },
+    ],
   },
   {
     id: "7-physics-heat",
@@ -177,6 +208,7 @@ export const CHAPTERS: Chapter[] = [
     ncertRef: "NCERT Class 12 Biology, Ch. Principles of Inheritance and Variation",
   },
   ...C6_MATH_CHAPTERS,
+  ...C6_SCIENCE_CHAPTERS,
 ];
 
 export const QUESTIONS: Question[] = [
@@ -609,6 +641,7 @@ export const QUESTIONS: Question[] = [
       "Independent assortment of two gene pairs in a dihybrid cross yields the classic 9 : 3 : 3 : 1 phenotypic ratio.",
   },
   ...C6_MATH_QUESTIONS,
+  ...C6_SCIENCE_QUESTIONS,
 ];
 
 // Starter "paper sets" built from the seed questions, so the Papers feature

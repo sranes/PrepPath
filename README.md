@@ -16,7 +16,8 @@ SWAYAM, and public previous-year papers — rather than rebuilding what already 
 
 - **Lessons + practice loop** — pick class → subject → chapter → **read the concept lesson**
   (`/learn`) → answer MCQ/numeric questions → see worked solutions instantly. Class 6 Maths
-  has full concept lessons for every chapter; other chapters jump straight to practice.
+  and Class 6 Science (Physics, Chemistry, Biology) have full concept lessons for every
+  chapter; other chapters jump straight to practice.
 - **Spaced-repetition revision** (`/review`) — an SM-2-style scheduler resurfaces questions
   before you forget them.
 - **Gamification** — daily streak + XP to build a habit.

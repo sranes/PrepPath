@@ -46,8 +46,10 @@ these first; the pages are thin clients over them.
 - **`src/lib/seed.ts`** — the hand-written starter content (`SUBJECTS`, `CHAPTERS`,
   `QUESTIONS`, `PAPERS`). This is the seed set; real content is meant to grow through the
   Admin tool, not by editing this file. Bulky per-subject content lives in sibling modules
-  spread into the seed arrays — e.g. **`src/lib/seed-class6-maths.ts`** holds the full Class 6
-  Maths chapter set (lessons + questions, merged Ganita Prakash + classic NCERT).
+  spread into the seed arrays — **`src/lib/seed-class6-maths.ts`** (full Class 6 Maths,
+  merged Ganita Prakash + classic NCERT) and **`src/lib/seed-class6-science.ts`** (Class 6
+  Physics/Chemistry/Biology, 5 chapters each, mapped from NCERT Curiosity + classic). Each
+  chapter carries a `lesson`.
 
 - **Lessons** — a `Chapter.lesson` is an optional `LessonBlock[]` (heading / para / list /
   formula / example / tip) rendered by `components/lesson.tsx` on the `/learn/[chapterId]`
