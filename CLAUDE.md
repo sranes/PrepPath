@@ -44,8 +44,16 @@ these first; the pages are thin clients over them.
   same types work for local seed data now and a database later.
 
 - **`src/lib/seed.ts`** — the hand-written starter content (`SUBJECTS`, `CHAPTERS`,
-  `QUESTIONS`). This is the seed set; real content is meant to grow through the Admin tool,
-  not by editing this file.
+  `QUESTIONS`, `PAPERS`). This is the seed set; real content is meant to grow through the
+  Admin tool, not by editing this file. Bulky per-subject content lives in sibling modules
+  spread into the seed arrays — e.g. **`src/lib/seed-class6-maths.ts`** holds the full Class 6
+  Maths chapter set (lessons + questions, merged Ganita Prakash + classic NCERT).
+
+- **Lessons** — a `Chapter.lesson` is an optional `LessonBlock[]` (heading / para / list /
+  formula / example / tip) rendered by `components/lesson.tsx` on the `/learn/[chapterId]`
+  page, which then links into `/practice/[chapterId]`. Subject-page cards link to `/learn`
+  when a lesson exists, else straight to practice. The cloud `chapters.lesson` jsonb column
+  persists lessons through `seedCloud()` / admin writes.
 
 - **`src/lib/content.ts`** — **the data-access layer and the key seam.** Every page asks
   *this* module for content. It merges three sources by id (later wins): (1) the in-code
@@ -112,7 +120,7 @@ these first; the pages are thin clients over them.
 Almost all pages are **client components** because content/progress live in `localStorage`.
 Dynamic-route pages read params via `useParams()` (not async server params).
 - `/` dashboard + class picker → `/c/[classId]` subjects → `/c/[classId]/[subjectId]`
-  chapters → `/practice/[chapterId]` runs the session.
+  chapters → `/learn/[chapterId]` (concept lesson) → `/practice/[chapterId]` runs the session.
 - `/review` runs the spaced-repetition due queue.
 - `/mock` (setup) → `/mock/run` (timed runner + in-page scored results).
 - `/papers` lists paper sets; starting one launches `/mock/run` via `startPaper`.

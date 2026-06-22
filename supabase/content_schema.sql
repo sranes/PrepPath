@@ -14,8 +14,12 @@ create table if not exists public.chapters (
   title      text not null,
   blurb      text not null default '',
   ncert_ref  text,
+  lesson     jsonb,                          -- teaching content (LessonBlock[])
   created_at timestamptz not null default now()
 );
+
+-- Safe to re-run on an existing project: add the lesson column if missing.
+alter table public.chapters add column if not exists lesson jsonb;
 
 create table if not exists public.questions (
   id          text primary key,

@@ -1,4 +1,13 @@
-import type { Chapter, ClassId, ExamKind, Paper, Question, Subject, SubjectId } from "./types";
+import type {
+  Chapter,
+  ClassId,
+  ExamKind,
+  LessonBlock,
+  Paper,
+  Question,
+  Subject,
+  SubjectId,
+} from "./types";
 import { CHAPTERS, PAPERS, QUESTIONS, SUBJECTS } from "./seed";
 import { supabase } from "./supabase";
 
@@ -112,6 +121,7 @@ type ChapterRow = {
   title: string;
   blurb: string;
   ncert_ref: string | null;
+  lesson: LessonBlock[] | null;
 };
 
 type QuestionRow = {
@@ -135,6 +145,7 @@ const chapterToRow = (c: Chapter): ChapterRow => ({
   title: c.title,
   blurb: c.blurb,
   ncert_ref: c.ncertRef ?? null,
+  lesson: c.lesson ?? null,
 });
 
 const rowToChapter = (r: ChapterRow): Chapter => ({
@@ -144,6 +155,7 @@ const rowToChapter = (r: ChapterRow): Chapter => ({
   title: r.title,
   blurb: r.blurb,
   ncertRef: r.ncert_ref ?? undefined,
+  lesson: r.lesson ?? undefined,
 });
 
 const questionToRow = (q: Question): QuestionRow => ({

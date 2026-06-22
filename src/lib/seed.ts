@@ -1,4 +1,5 @@
 import type { Subject, Chapter, Question, Paper } from "./types";
+import { C6_MATH_CHAPTERS, C6_MATH_QUESTIONS } from "./seed-class6-maths";
 
 // ---------------------------------------------------------------------------
 // SEED CONTENT
@@ -20,9 +21,47 @@ export const CHAPTERS: Chapter[] = [
     id: "6-maths-integers",
     classId: "6",
     subjectId: "maths",
-    title: "Integers",
+    title: "Integers (The Other Side of Zero)",
     blurb: "Positive and negative whole numbers and the number line.",
-    ncertRef: "NCERT Class 6 Maths, Ch. Integers",
+    ncertRef: "NCERT Class 6 Maths — Integers / The Other Side of Zero",
+    lesson: [
+      {
+        kind: "para",
+        text: "Numbers like 1, 2, 3 … are not enough to describe everything. To show a temperature below zero, money owed, or a floor below the ground, we need numbers smaller than zero — negative numbers.",
+      },
+      { kind: "heading", text: "What are integers?" },
+      {
+        kind: "para",
+        text: "Integers are the whole numbers together with their negatives: … −3, −2, −1, 0, 1, 2, 3 … Zero is an integer that is neither positive nor negative.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Positive integers: 1, 2, 3, … (sometimes written +1, +2, …)",
+          "Negative integers: −1, −2, −3, …",
+          "Zero (0) sits exactly in the middle.",
+        ],
+      },
+      { kind: "heading", text: "The number line" },
+      {
+        kind: "para",
+        text: "On a number line, numbers increase as we move RIGHT and decrease as we move LEFT. So −5 is smaller than −2, and any negative number is smaller than any positive number.",
+      },
+      { kind: "tip", text: "Bigger negative digits mean a SMALLER number: −9 < −3, even though 9 > 3." },
+      { kind: "heading", text: "Adding and subtracting" },
+      {
+        kind: "list",
+        items: [
+          "Adding a positive → move right. Adding a negative → move left.",
+          "Subtracting a number means adding its opposite: a − (−b) = a + b.",
+        ],
+      },
+      {
+        kind: "example",
+        problem: "Evaluate (−6) − (−9).",
+        solution: "Subtracting −9 is the same as adding 9: (−6) + 9 = 3.",
+      },
+    ],
   },
   {
     id: "6-physics-motion-measurement",
@@ -137,6 +176,7 @@ export const CHAPTERS: Chapter[] = [
     blurb: "Mendelian genetics, ratios and inheritance patterns.",
     ncertRef: "NCERT Class 12 Biology, Ch. Principles of Inheritance and Variation",
   },
+  ...C6_MATH_CHAPTERS,
 ];
 
 export const QUESTIONS: Question[] = [
@@ -568,6 +608,7 @@ export const QUESTIONS: Question[] = [
     solution:
       "Independent assortment of two gene pairs in a dihybrid cross yields the classic 9 : 3 : 3 : 1 phenotypic ratio.",
   },
+  ...C6_MATH_QUESTIONS,
 ];
 
 // Starter "paper sets" built from the seed questions, so the Papers feature

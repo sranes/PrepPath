@@ -17,6 +17,17 @@ export interface Subject {
   accent: string;
 }
 
+/** A single block of a chapter's lesson (the teaching content shown before
+ *  practice). A small, serialisable union so lessons work in seed + cloud and
+ *  render with no markdown/LaTeX dependency. */
+export type LessonBlock =
+  | { kind: "heading"; text: string }
+  | { kind: "para"; text: string }
+  | { kind: "list"; items: string[] }
+  | { kind: "formula"; text: string }
+  | { kind: "example"; problem: string; solution: string }
+  | { kind: "tip"; text: string };
+
 export interface Chapter {
   id: string; // globally unique, e.g. "8-physics-force-pressure"
   classId: ClassId;
@@ -26,6 +37,8 @@ export interface Chapter {
   blurb: string;
   /** maps the chapter to its NCERT origin so school + exam prep align */
   ncertRef?: string;
+  /** the lesson: concepts explained before any question (optional) */
+  lesson?: LessonBlock[];
 }
 
 export interface Question {

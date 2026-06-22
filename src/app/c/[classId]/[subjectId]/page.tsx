@@ -42,17 +42,27 @@ export default function SubjectPage() {
           const total = getQuestionsForChapter(ch.id).length;
           const s = stats[ch.id];
           const pct = s && s.attempted ? Math.round((s.correct / s.attempted) * 100) : null;
+          const hasLesson = Boolean(ch.lesson && ch.lesson.length > 0);
+          // chapters with a lesson open the lesson first; others go to practice
+          const href = hasLesson ? `/learn/${ch.id}` : `/practice/${ch.id}`;
           return (
             <Link
               key={ch.id}
-              href={`/practice/${ch.id}`}
+              href={href}
               className="block rounded-xl border border-border bg-card p-4 transition hover:border-brand hover:shadow-md"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="font-semibold">{ch.title}</div>
-                <span className="shrink-0 rounded-full bg-background px-2 py-0.5 text-xs text-muted">
-                  {total} Q
-                </span>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  {hasLesson && (
+                    <span className="rounded-full bg-brand/15 px-2 py-0.5 text-xs font-medium text-brand">
+                      📖 Lesson
+                    </span>
+                  )}
+                  <span className="rounded-full bg-background px-2 py-0.5 text-xs text-muted">
+                    {total} Q
+                  </span>
+                </div>
               </div>
               <p className="mt-1 text-sm text-muted">{ch.blurb}</p>
               {pct !== null && (
