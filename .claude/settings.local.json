@@ -3,7 +3,12 @@
     "allow": [
       "WebSearch",
       "Bash(npm --version)",
-      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --turbopack --import-alias \"@/*\" --use-npm --yes)"
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --turbopack --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm install *)",
+      "PowerShell(Stop-Process -Id 2772 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(\"done\")"
     ]
   }
 }

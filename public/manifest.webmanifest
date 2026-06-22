@@ -1,0 +1,17 @@
+{
+  "name": "PrepPath — JEE/NEET Foundation",
+  "short_name": "PrepPath",
+  "description": "Free, ad-free practice for Class 6-10 students building toward JEE and NEET.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
