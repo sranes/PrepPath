@@ -57,6 +57,15 @@ these first; the pages are thin clients over them.
   when a lesson exists, else straight to practice. The cloud `chapters.lesson` jsonb column
   persists lessons through `seedCloud()` / admin writes.
 
+- **Gamified levels** — `src/lib/levels.ts` `getChapterSets()` splits a chapter's questions
+  into ordered **sets of 5** (`SET_SIZE`), sorted easy→hard so the ramp is stable regardless
+  of seed/cloud order. `/practice/[chapterId]` is a **level map**: each set is a level that
+  unlocks the next when passed (≥3/5) and awards up to 3 stars. Per-set results live in
+  `ProgressState.levels` (keyed `chapterId#setIndex`) via `recordSetResult` /
+  `getChapterLevels` in `progress.ts` (merged + cloud-synced like the rest of progress).
+  `QuestionRunner` takes an optional `onFinish(correct,total)` so a level reports its score
+  in-page instead of navigating. Convention: author ~50 questions per chapter (10 sets).
+
 - **`src/lib/content.ts`** — **the data-access layer and the key seam.** Every page asks
   *this* module for content. It merges three sources by id (later wins): (1) the in-code
   NCERT **seed** (always available, offline), (2) the **shared cloud bank** from Supabase

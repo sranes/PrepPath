@@ -24,12 +24,20 @@ export interface SrsCard {
   reps: number;
 }
 
+/** A completed level (set of questions) within a chapter. */
+export interface LevelRecord {
+  stars: number; // 0–3
+  best: number; // best number correct
+}
+
 export interface ProgressState {
   xp: number;
   streak: number;
   lastActiveDay: string | null; // YYYY-MM-DD
   attempts: Attempt[];
   srs: Record<string, SrsCard>;
+  /** keyed by `${chapterId}#${setIndex}` */
+  levels: Record<string, LevelRecord>;
 }
 
 const EMPTY: ProgressState = {
@@ -38,6 +46,7 @@ const EMPTY: ProgressState = {
   lastActiveDay: null,
   attempts: [],
   srs: {},
+  levels: {},
 };
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -137,6 +146,65 @@ export function statsByChapter(
   return out;
 }
 
+// --- Levels (gamified sets) -----------------------------------------------
+
+function starsFor(correct: number, total: number): number {
+  if (total <= 0) return 0;
+  const pct = correct / total;
+  if (pct >= 1) return 3;
+  if (pct >= 0.8) return 2;
+  if (pct >= 0.6) return 1; // 0.6 = pass (e.g. 3/5)
+  return 0;
+}
+
+const levelKey = (chapterId: string, setIndex: number) => `${chapterId}#${setIndex}`;
+
+/** Record a completed level. Stars never go down; improving stars grants bonus XP. */
+export function recordSetResult(
+  chapterId: string,
+  setIndex: number,
+  correct: number,
+  total: number
+): { stars: number; improved: boolean } {
+  const state = loadProgress();
+  const key = levelKey(chapterId, setIndex);
+  const prev = state.levels[key] ?? { stars: 0, best: 0 };
+  const stars = starsFor(correct, total);
+  const improved = stars > prev.stars;
+  if (improved) state.xp += (stars - prev.stars) * 5; // bonus for new mastery
+  state.levels[key] = {
+    stars: Math.max(prev.stars, stars),
+    best: Math.max(prev.best, correct),
+  };
+  bumpStreak(state);
+  save(state);
+  return { stars, improved };
+}
+
+export interface LevelInfo {
+  stars: number;
+  best: number;
+  unlocked: boolean;
+  passed: boolean;
+}
+
+/** Per-set state for a chapter: stars earned + whether each set is unlocked. */
+export function getChapterLevels(chapterId: string, setCount: number): LevelInfo[] {
+  const { levels } = loadProgress();
+  const out: LevelInfo[] = [];
+  for (let i = 0; i < setCount; i++) {
+    const rec = levels[levelKey(chapterId, i)] ?? { stars: 0, best: 0 };
+    const prevStars = i === 0 ? 1 : levels[levelKey(chapterId, i - 1)]?.stars ?? 0;
+    out.push({
+      stars: rec.stars,
+      best: rec.best,
+      unlocked: i === 0 || prevStars >= 1,
+      passed: rec.stars >= 1,
+    });
+  }
+  return out;
+}
+
 // --- Cloud sync (Supabase, optional) --------------------------------------
 // Local storage stays the source of truth and cache. When a user is signed in
 // we mirror their progress to a single jsonb row so it follows them across
@@ -164,12 +232,21 @@ export function mergeProgress(a: ProgressState, b: ProgressState): ProgressState
   const lastActiveDay =
     (a.lastActiveDay ?? "") >= (b.lastActiveDay ?? "") ? a.lastActiveDay : b.lastActiveDay;
 
+  const levels: Record<string, LevelRecord> = { ...a.levels };
+  for (const [k, v] of Object.entries(b.levels ?? {})) {
+    const cur = levels[k];
+    if (!cur || v.stars > cur.stars || (v.stars === cur.stars && v.best > cur.best)) {
+      levels[k] = v;
+    }
+  }
+
   return {
     xp: Math.max(a.xp, b.xp),
     streak: Math.max(a.streak, b.streak),
     lastActiveDay,
     attempts,
     srs,
+    levels,
   };
 }
 

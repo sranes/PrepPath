@@ -14,10 +14,11 @@ SWAYAM, and public previous-year papers — rather than rebuilding what already 
 
 ## What's built (MVP)
 
-- **Lessons + practice loop** — pick class → subject → chapter → **read the concept lesson**
-  (`/learn`) → answer MCQ/numeric questions → see worked solutions instantly. Class 6 Maths
-  and Class 6 Science (Physics, Chemistry, Biology) have full concept lessons for every
-  chapter; other chapters jump straight to practice.
+- **Lessons + gamified levels** — pick class → subject → chapter → **read the concept lesson**
+  (`/learn`) → play through **levels**: questions are grouped into sets of 5 (easy → hard),
+  each set a level that unlocks the next when you score ≥3/5 and earns up to ⭐⭐⭐. Worked
+  solutions show instantly. Class 6 Maths & Science have full concept lessons; "Knowing Our
+  Numbers" is built out to the target 50 questions (10 levels) as the content standard.
 - **Spaced-repetition revision** (`/review`) — an SM-2-style scheduler resurfaces questions
   before you forget them.
 - **Gamification** — daily streak + XP to build a habit.

@@ -11,9 +11,12 @@ interface Props {
   backHref: string;
   backLabel: string;
   title: string;
+  /** if provided, the final "Finish" button calls this instead of navigating
+   *  (used by the gamified level runner to record stars in-page) */
+  onFinish?: (correct: number, total: number) => void;
 }
 
-export function QuestionRunner({ questions, backHref, backLabel, title }: Props) {
+export function QuestionRunner({ questions, backHref, backLabel, title, onFinish }: Props) {
   const ordered = useMemo(() => questions, [questions]);
   const [idx, setIdx] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -152,12 +155,21 @@ export function QuestionRunner({ questions, backHref, backLabel, title }: Props)
             Check
           </button>
         ) : isLast ? (
-          <Link
-            href={backHref}
-            className="rounded-lg bg-emerald-600 px-5 py-2 font-semibold text-white"
-          >
-            Finish ({score.correct}/{score.total})
-          </Link>
+          onFinish ? (
+            <button
+              onClick={() => onFinish(score.correct, score.total)}
+              className="rounded-lg bg-emerald-600 px-5 py-2 font-semibold text-white"
+            >
+              Finish ({score.correct}/{score.total})
+            </button>
+          ) : (
+            <Link
+              href={backHref}
+              className="rounded-lg bg-emerald-600 px-5 py-2 font-semibold text-white"
+            >
+              Finish ({score.correct}/{score.total})
+            </Link>
+          )
         ) : (
           <button
             onClick={next}
