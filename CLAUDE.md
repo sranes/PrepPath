@@ -90,7 +90,8 @@ these first; the pages are thin clients over them.
 - **Papers** — a `Paper` is a named, ordered question set (PYQ / sample paper). They live in
   `content.ts` exactly like questions: seed (`PAPERS` in `seed.ts`, works offline) + cloud
   (`papers` table) merged by `getAllPapers()`, with `addCloudPaper`/`deleteCloudPaper`
-  writers. Public list at `/papers`; built in `/admin/papers`.
+  writers. Public list at `/papers`; built **and edited** in `/admin/papers` (lists all
+  papers with edit/delete; Edit loads a paper into the builder and saves under the same id).
 
 - **`src/lib/progress.ts`** — client-only progress + the learning-science core. Persists to
   `localStorage` (`cw:progress`): XP, daily streak, attempt log, and a per-question
