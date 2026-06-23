@@ -355,3 +355,13 @@ export function saveAdminChapters(cs: Chapter[]) {
 export function getAdminChapters(): Chapter[] {
   return readLocal<Chapter>(ADMIN_CHAPTERS_KEY);
 }
+
+/** Insert or replace a question in local storage by id (overrides seed too). */
+export function upsertAdminQuestion(q: Question) {
+  saveAdminQuestions([...getAdminQuestions().filter((x) => x.id !== q.id), q]);
+}
+
+/** Insert or replace a chapter in local storage by id (overrides seed too). */
+export function upsertAdminChapter(c: Chapter) {
+  saveAdminChapters([...getAdminChapters().filter((x) => x.id !== c.id), c]);
+}

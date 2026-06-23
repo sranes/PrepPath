@@ -138,10 +138,14 @@ Dynamic-route pages read params via `useParams()` (not async server params).
 - `/progress` exam-readiness dashboard; `/leaderboard` opt-in XP ranking (cloud-only).
 - `/resources` curated links to official free study material (external).
 - `/account` sign in / sign up (only meaningful when cloud is configured).
-- `/admin` single add + JSON import/export; `/admin/import` bulk JSON import (validation +
-  preview); `/admin/papers` paper builder. All gated by `useAdmin()`
-  (`src/lib/use-admin.ts`), which reports `cloud` (configured + signed in + in `admins`).
-  Cloud writes target the shared bank; otherwise they fall back to this device.
+- `/admin` add **and edit** questions (a class/subject/chapter filter lists every question
+  with edit/delete; editing upserts by the same id, so it overrides seed/cloud) + JSON
+  export; `/admin/chapters` edit a chapter's title/blurb and its **lesson** via a structured
+  block editor (add/reorder/remove heading/para/list/formula/example/tip); `/admin/import`
+  bulk JSON import (validation + preview); `/admin/papers` paper builder. All gated by
+  `useAdmin()` (`src/lib/use-admin.ts`), which reports `cloud` (configured + signed in + in
+  `admins`). Cloud writes target the shared bank; otherwise they fall back to this device
+  (local edits override seed by id via `upsertAdminQuestion`/`upsertAdminChapter`).
 
 ### Shared components (`src/components`)
 - `question-runner.tsx` — the reusable practice engine (MCQ + numeric, instant solution,
